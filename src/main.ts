@@ -1,13 +1,18 @@
 #!/usr/bin/env tsx
+import "reflect-metadata";
 import { RedisAdapter } from "@grammyjs/storage-redis";
-import { Role } from "@prisma/client";
 import Redis from "ioredis";
 import { createBot } from "~/bot";
 import { container } from "~/container";
 import { createServer } from "~/server";
+import { initializeDatabase } from "./bot/database";
+import { userRepository } from "./bot/repositories/user.repository";
 
 async function main() {
-  const { config, logger, prisma } = container.items;
+  const { config, logger } = container.items;
+
+  await initializeDatabase();
+
   const bot = createBot(config.BOT_TOKEN, {
     container,
     sessionStorage: new RedisAdapter({
@@ -18,27 +23,18 @@ async function main() {
 
   const server = await createServer(bot, container);
 
-  // Graceful shutdown
-  prisma.$on("beforeExit", async () => {
-    logger.info("shutdown");
-
-    await bot.stop();
-    await server.close();
-  });
-
-  await prisma.$connect();
-
   // update bot owner role
-  await prisma.user.upsert({
-    where: prisma.user.byTelegramId(config.BOT_ADMIN_USER_ID),
-    create: {
+  await userRepository.upsert(
+    {
+      where: {
+        telegramId: config.BOT_ADMIN_USER_ID,
+      },
+    },
+    {
       telegramId: config.BOT_ADMIN_USER_ID,
-      role: Role.OWNER,
-    },
-    update: {
-      role: Role.OWNER,
-    },
-  });
+      role: "owner",
+    }
+  );
 
   if (config.isProd) {
     await server.listen({

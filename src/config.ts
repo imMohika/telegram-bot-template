@@ -1,5 +1,8 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+import { expand } from "dotenv-expand";
 import z from "zod";
+
+expand(dotenv.config());
 
 const updates = [
   "message",
@@ -42,7 +45,8 @@ const configSchema = z.object({
   }, z.array(z.enum(updates))),
   BOT_TOKEN: z.string(),
   BOT_WEBHOOK: z.string().url(),
-  BOT_ADMIN_USER_ID: z.coerce.number().finite(),
+  BOT_ADMIN_USER_ID: z.string(),
+  DEFAULT_LOCALE: z.string(),
 });
 
 const parseConfig = (env: NodeJS.ProcessEnv) => {

@@ -6,7 +6,7 @@ import { errorHandler } from "~/bot/handlers";
 import type { Container } from "~/container";
 
 export const createServer = async (bot: Bot, container: Container) => {
-  const { logger, prisma } = container.items;
+  const { logger } = container.items;
 
   const server = fastify({
     logger,
@@ -29,8 +29,8 @@ export const createServer = async (bot: Bot, container: Container) => {
   server.get(`/${bot.token}/metrics`, async (req, res) => {
     try {
       const appMetrics = await register.metrics();
-      const prismaMetrics = await prisma.$metrics.prometheus();
-      const metrics = appMetrics + prismaMetrics;
+      // const prismaMetrics = await prisma.$metrics.prometheus();
+      const metrics = appMetrics;
 
       await res.header("Content-Type", register.contentType).send(metrics);
     } catch (err) {
