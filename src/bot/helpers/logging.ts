@@ -1,12 +1,12 @@
-import { Middleware } from "grammy";
-import _ from "lodash";
-import type { Context } from "~/bot/context";
+import { type Middleware } from "grammy";
+import { isNil, pick } from "lodash";
+import { type Context } from "~/bot/context";
 import { updateHandledCounter } from "~/metrics";
 
 export const getChatInfo = (ctx: Context) => {
-  if (!_.isNil(ctx.chat)) {
+  if (!isNil(ctx.chat)) {
     return {
-      chat: _.pick(ctx.chat, ["id", "type"]),
+      chat: pick(ctx.chat, ["id", "type"]),
     };
   }
 
@@ -14,15 +14,15 @@ export const getChatInfo = (ctx: Context) => {
 };
 
 export const getSenderInfo = (ctx: Context) => {
-  if (!_.isNil(ctx.senderChat)) {
+  if (!isNil(ctx.senderChat)) {
     return {
-      sender: _.pick(ctx.senderChat, ["id", "type"]),
+      sender: pick(ctx.senderChat, ["id", "type"]),
     };
   }
 
-  if (!_.isNil(ctx.from)) {
+  if (!isNil(ctx.from)) {
     return {
-      sender: _.pick(ctx.from, ["id"]),
+      sender: pick(ctx.from, ["id"]),
     };
   }
 

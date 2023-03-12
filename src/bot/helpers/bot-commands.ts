@@ -50,6 +50,4 @@ export const getPrivateChatAdminCommands = (options: {
   return commands;
 };
 
-export const getGroupChatCommands = (options: { localeCode: string }) => {
-  return [];
-};
+export const getGroupChatCommands = (options: { localeCode: string }) => [];

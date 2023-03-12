@@ -1,8 +1,8 @@
-import { Middleware } from "grammy";
-import type { Context } from "~/bot/context";
+import { type NextFunction } from "grammy";
+import { type Context } from "~/bot/context";
 import { getFullMetadata } from "~/bot/helpers/logging";
 
-export const updateLogger = (): Middleware<Context> => (ctx, next) => {
+export const updateLogger = (ctx: Context, next: NextFunction) => {
   ctx.api.config.use((prev, method, payload, signal) => {
     ctx.logger.debug({
       msg: "bot api call",

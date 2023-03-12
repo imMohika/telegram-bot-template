@@ -1,5 +1,5 @@
-import { ErrorHandler } from "grammy";
-import type { Context } from "~/bot/context";
+import { type ErrorHandler } from "grammy";
+import  { type Context } from "~/bot/context";
 import { getFullMetadata } from "~/bot/helpers/logging";
 
 export const errorHandler: ErrorHandler<Context> = (error) => {

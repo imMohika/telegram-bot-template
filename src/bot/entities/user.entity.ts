@@ -1,60 +1,67 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from "typeorm";
+import { EntitySchema } from "typeorm";
 import { config } from "~/config";
 
-export const UserRoles = ["user", "admin", "owner"] as const;
-export type UserRole = (typeof UserRoles)[number];
+export const userRoles = ["user", "admin", "owner"] as const;
+export type UserRole = (typeof userRoles)[number];
 
-@Entity("users")
-export class UserEntity {
-  @PrimaryGeneratedColumn("increment")
+export interface UserEntity {
   id: number;
-
-  @Column({
-    name: "telegram_id",
-    type: "varchar",
-    length: 255,
-    unique: true,
-  })
   telegramId: string;
-
-  @Column({
-    name: "language_code",
-    type: "varchar",
-    length: 4,
-    default: config.DEFAULT_LOCALE,
-  })
-  languageCode: string;
-
-  @Column({
-    type: "enum",
-    enum: UserRoles,
-    default: "user",
-  })
-  role: UserRole;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @Column({
-    type: "varchar",
-    length: 255,
-    nullable: true,
-  })
   name?: string;
-
-  @Column({
-    type: "varchar",
-    length: 255,
-    nullable: true,
-  })
   username?: string;
+  languageCode: string;
+  role: UserRole;
+  updatedAt: Date;
+  createdAt: Date;
 }
+
+export const userEntity = new EntitySchema<UserEntity>({
+  name: "users",
+  columns: {
+    id: {
+      type: Number,
+      primary: true,
+      generated: "increment",
+    },
+    telegramId: {
+      name: "telegram_id",
+      type: "varchar",
+      length: 255,
+      unique: true,
+    },
+    name: {
+      name: "name",
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    username: {
+      name: "username",
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    languageCode: {
+      name: "language_code",
+      type: "varchar",
+      length: 4,
+      default: config.DEFAULT_LOCALE,
+    },
+    role: {
+      name: "role",
+      type: "enum",
+      enum: userRoles,
+      default: "user",
+    },
+    updatedAt: {
+      name: "updated_at",
+      type: "datetime",
+      updateDate: true,
+    },
+    createdAt: {
+      name: "created_at",
+      type: "datetime",
+      createDate: true,
+    },
+  },
+});

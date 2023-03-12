@@ -1,8 +1,8 @@
-import { Middleware } from "grammy";
-import type { Context } from "~/bot/context";
+import { type NextFunction } from "grammy";
 import { userRepository } from "../repositories/user.repository";
+import { type Context } from "~/bot/context";
 
-export const setScope = (): Middleware<Context> => async (ctx, next) => {
+export const setScope = async (ctx: Context, next: NextFunction) => {
   if (ctx.from?.is_bot === false) {
     const {
       id: telegramId,
@@ -12,7 +12,7 @@ export const setScope = (): Middleware<Context> => async (ctx, next) => {
       username,
     } = ctx.from;
 
-    ctx.scope.user = await userRepository.upsert(
+    const user = await userRepository.upsert(
       {
         where: {
           telegramId: telegramId.toString(),
@@ -22,10 +22,12 @@ export const setScope = (): Middleware<Context> => async (ctx, next) => {
         telegramId: telegramId.toString(),
         languageCode,
         username,
-        name: `${firstName ?? ""} ${lastName ?? ""}`.trim(),
+        name: `${firstName} ${lastName ?? ""}`.trim(),
       }
     );
+
+    ctx.updateScope({ user });
   }
 
-  return next();
+  await next();
 };

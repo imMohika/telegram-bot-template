@@ -50,10 +50,10 @@ const configSchema = z.object({
 });
 
 const parseConfig = (env: NodeJS.ProcessEnv) => {
-  const config = configSchema.parse(env);
+  const parsed = configSchema.parse(env);
 
   return {
-    ...config,
+    ...parsed,
     isDev: process.env.NODE_ENV === "development",
     isProd: process.env.NODE_ENV === "production",
   };

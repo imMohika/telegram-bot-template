@@ -1,17 +1,19 @@
 import { DataSource } from "typeorm";
+import { userEntity } from "./entities/user.entity";
 import { config } from "~/config";
-import { UserEntity } from "./entities/user.entity";
 
 export const dataSource = new DataSource({
   type: "postgres",
   url: config.DATABASE_URL,
-  entities: [UserEntity],
+  entities: [userEntity],
   synchronize: config.isDev,
   logging: true,
 });
 
 export const initializeDatabase = async () => {
-  if (dataSource.isInitialized) return;
+  if (dataSource.isInitialized) {
+    return;
+  }
 
   try {
     await dataSource.initialize();

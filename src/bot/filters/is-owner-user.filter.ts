@@ -1,7 +1,5 @@
-import { Context, ContextScopeWith } from "~/bot/context";
+import { type Context, type ContextScopeWith } from "~/bot/context";
 
 export const isOwnerUser = <C extends Context>(
   ctx: C
-): ctx is C & ContextScopeWith<"user"> => {
-  return ctx.scope.user?.role === "owner";
-};
+): ctx is C & ContextScopeWith<"user"> => ctx.scope.user?.role === "owner";

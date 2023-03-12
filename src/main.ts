@@ -1,14 +1,14 @@
 #!/usr/bin/env tsx
 import "reflect-metadata";
 import { RedisAdapter } from "@grammyjs/storage-redis";
-import Redis from "ioredis";
+import { Redis } from "ioredis";
+import { initializeDatabase } from "./bot/database";
+import { userRepository } from "./bot/repositories/user.repository";
 import { createBot } from "~/bot";
 import { container } from "~/container";
 import { createServer } from "~/server";
-import { initializeDatabase } from "./bot/database";
-import { userRepository } from "./bot/repositories/user.repository";
 
-async function main() {
+const main = async () => {
   const { config, logger } = container.items;
 
   await initializeDatabase();
@@ -19,6 +19,7 @@ async function main() {
       instance: new Redis(config.REDIS_URL),
     }),
   });
+
   await bot.init();
 
   const server = await createServer(bot, container);
@@ -48,16 +49,19 @@ async function main() {
   } else if (config.isDev) {
     await bot.start({
       allowed_updates: config.BOT_ALLOWED_UPDATES,
-      onStart: ({ username }) =>
+      onStart: ({ username }) => {
         logger.info({
           msg: "bot running...",
           username,
-        }),
+        });
+      },
     });
   }
-}
+};
 
-main().catch((err) => {
-  container.items.logger.error(err);
+try {
+  await main();
+} catch (error) {
+  container.items.logger.error(error);
   process.exit(1);
-});
+}

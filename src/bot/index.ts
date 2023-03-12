@@ -1,8 +1,8 @@
 import { autoChatAction } from "@grammyjs/auto-chat-action";
 import { hydrate } from "@grammyjs/hydrate";
 import { hydrateReply, parseMode } from "@grammyjs/parse-mode";
-import { Bot as TelegramBot, BotConfig, StorageAdapter } from "grammy";
-import { Context, createContextConstructor } from "~/bot/context";
+import { Bot as TelegramBot, type BotConfig, type StorageAdapter } from "grammy";
+import { type Context, createContextConstructor } from "~/bot/context";
 import { welcomeFeature } from "~/bot/features";
 import { errorHandler, unhandledHandler } from "~/bot/handlers";
 import { logHandle } from "~/bot/helpers/logging";
@@ -13,7 +13,7 @@ import {
   setScope,
   updateLogger,
 } from "~/bot/middlewares";
-import type { Container } from "~/container";
+import  { type Container } from "~/container";
 
 type Dependencies = {
   container: Container;

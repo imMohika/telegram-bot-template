@@ -1,5 +1,5 @@
 import { Composer } from "grammy";
-import type { Context } from "~/bot/context";
+import  { type Context } from "~/bot/context";
 import { logHandle } from "~/bot/helpers/logging";
 import { createChangeLanguageKeyboard } from "~/bot/keyboards";
 
