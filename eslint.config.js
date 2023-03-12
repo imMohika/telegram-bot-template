@@ -1,5 +1,5 @@
-const sheriff = require('eslint-config-sheriff');
-const { defineFlatConfig } = require('eslint-define-config');
+import sheriff from "eslint-config-sheriff"
+import { defineFlatConfig } from "eslint-define-config";
 
 const sheriffOptions = {
   "react": false,
@@ -10,7 +10,7 @@ const sheriffOptions = {
   "vitest": false
 };
 
-module.exports = defineFlatConfig([
+const config = defineFlatConfig([
   ...sheriff(sheriffOptions),
   {
     rules: {
@@ -18,3 +18,5 @@ module.exports = defineFlatConfig([
     }
   }
 ]);
+
+export default config;

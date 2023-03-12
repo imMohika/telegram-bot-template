@@ -36,15 +36,15 @@ export const createBot = (
   bot.api.config.use(parseMode("HTML"));
 
   if (config.isDev) {
-    bot.use(updateLogger());
+    bot.use(updateLogger);
   }
 
-  bot.use(metrics());
+  bot.use(metrics);
   bot.use(autoChatAction());
   bot.use(hydrateReply);
   bot.use(hydrate());
   bot.use(session(sessionStorage));
-  bot.use(setScope());
+  bot.use(setScope);
   bot.use(i18n());
 
   // Handlers

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Telegram bot starter template",
   "main": "dist/main.js",
+  "type": "module",
   "scripts": {
     "lint": "eslint \"src/**/*.ts\"",
     "format": "eslint \"src/**/*.ts\" --fix",
@@ -32,7 +33,7 @@
     "ioredis": "5.3.1",
     "iso-639-1": "2.1.15",
     "iti": "0.6.0",
-    "lodash": "4.17.21",
+    "lodash-es": "^4.17.21",
     "pg": "^8.10.0",
     "pino": "8.11.0",
     "pino-pretty": "9.4.0",
@@ -45,7 +46,7 @@
   "devDependencies": {
     "@types/debug": "4.1.7",
     "@types/ioredis": "4.28.10",
-    "@types/lodash": "4.14.191",
+    "@types/lodash-es": "^4.17.6",
     "@types/node": "18.14.6",
     "@typescript-eslint/eslint-plugin": "5.54.1",
     "@typescript-eslint/parser": "5.54.1",

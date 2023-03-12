@@ -1,6 +1,6 @@
 import { InlineKeyboard } from "grammy";
 import ISO6391 from "iso-639-1";
-import { chunk } from "lodash";
+import { chunk } from "lodash-es";
 import { changeLanguageData } from "~/bot/callback-data";
 import { type Context } from "~/bot/context";
 import { i18n } from "~/bot/i18n";

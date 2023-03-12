@@ -1,5 +1,5 @@
 import { type Middleware } from "grammy";
-import { isNil, pick } from "lodash";
+import { isNil, pick } from "lodash-es";
 import { type Context } from "~/bot/context";
 import { updateHandledCounter } from "~/metrics";
 

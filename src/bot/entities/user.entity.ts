@@ -55,12 +55,12 @@ export const userEntity = new EntitySchema<UserEntity>({
     },
     updatedAt: {
       name: "updated_at",
-      type: "datetime",
+      type: "timestamp without time zone",
       updateDate: true,
     },
     createdAt: {
       name: "created_at",
-      type: "datetime",
+      type: "timestamp without time zone",
       createDate: true,
     },
   },
